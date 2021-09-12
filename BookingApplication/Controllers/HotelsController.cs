@@ -22,7 +22,7 @@ namespace BookingApplication.Controllers
         // GET: Hotels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Hotel.ToListAsync());
+            return View(await _context.Hotel.Include(i=>i.HotelPhotos).ToListAsync());
         }
 
         // GET: Hotels/Details/5

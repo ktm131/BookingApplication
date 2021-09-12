@@ -20,5 +20,7 @@ namespace BookingApplication.Data
 
         public DbSet<BookingApplication.Models.Hotel> Hotel { get; set; }
 
+        public DbSet<BookingApplication.Models.HotelPhoto> HotelPhoto { get; set; }
+
     }
 }
