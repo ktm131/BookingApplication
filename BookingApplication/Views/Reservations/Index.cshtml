@@ -31,6 +31,9 @@
                 @Html.DisplayNameFor(model => model.People)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Apartment.Hotel)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Apartment)
             </th>
             <th></th>
@@ -56,6 +59,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.People)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apartment.Hotel.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Apartment.Name)

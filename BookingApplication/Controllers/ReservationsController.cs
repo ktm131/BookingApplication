@@ -24,7 +24,7 @@ namespace BookingApplication.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            var bookingContext = _context.Reservation.Include(r => r.Apartment);
+            var bookingContext = _context.Reservation.Include(r => r.Apartment).Include(i=>i.Apartment.Hotel);
             return View(await bookingContext.ToListAsync());
         }
 
