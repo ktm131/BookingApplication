@@ -1,22 +1,20 @@
-﻿@model BookingApplication.Models.HotelPhoto
+﻿@model BookingApplication.Models.ApartmentPhoto
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
-<h4>HotelPhoto</h4>
+<h4>ApartmentPhoto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="HotelId" class="control-label"></label>
-                <select asp-for="HotelId" class="form-control" asp-items="ViewBag.HotelId"></select>
-                <span asp-validation-for="HotelId" class="text-danger"></span>
+                <label asp-for="ApartmentId" class="control-label"></label>
+                <select asp-for="ApartmentId" class="form-control" asp-items="ViewBag.ApartmentId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
@@ -29,14 +27,14 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-route-id="@Model.ApartmentId">Back to List</a>
 </div>
 
 @section Scripts {
