@@ -22,5 +22,7 @@ namespace BookingApplication.Models
         public bool Kitchen { get; set; }
         public bool Tv { get; set; }
         public decimal MaxNightPrice { get; set; }
+
+        public List<Hotel> Hotels { get; set; }
     }
 }

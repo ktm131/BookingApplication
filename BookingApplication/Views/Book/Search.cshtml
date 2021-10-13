@@ -106,6 +106,28 @@
     </div>
 </div>
 
+@if (Model.Hotels != null && Model.Hotels.Any())
+{
+    foreach (var hotel in Model.Hotels)
+    {
+        <div class="row">
+            <div class="col">
+                @hotel.Name
+            </div>
+        </div>
+    }
+}
+else if(Model.Hotels != null && Model.Hotels.Count == 0)
+{
+<div class="row">
+    <div class="col">
+        <div class="alert alert-warning">
+            Apartments not found. Please change your search details.
+        </div>
+    </div>
+</div>
+}
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
