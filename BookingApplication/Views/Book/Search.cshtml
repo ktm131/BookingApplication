@@ -108,24 +108,139 @@
 
 @if (Model.Hotels != null && Model.Hotels.Any())
 {
-    foreach (var hotel in Model.Hotels)
-    {
-        <div class="row">
-            <div class="col">
-                @hotel.Name
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Rate
+                </th>
+                <th>
+                    Stars
+                </th>
+                <th>
+                    Hotel photos
+                </th>
+                <th>
+                    Location
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hotel in Model.Hotels)
+            {
+                <tr>
+                    <td>
+                        @hotel.Name
+                    </td>
+                    <td>
+                        @hotel.Description
+                    </td>
+                    <td>
+                        <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
+                            @hotel.Rate
+                        </div>
+                    </td>
+                    <td>
+                        @hotel.Stars
+                    </td>
+                    <td>
+                        @if (hotel.HotelPhotos.Any())
+                        {
+                            <div id="photosCarousel_@hotel.Id" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach (var p in hotel.HotelPhotos)
+                                    {
+                                        <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
+                                            <img class="tcarousel-img d-block w-100" src="@p.Photo" alt="@p.Title" title="@p.Title">
+                                        </div>
+                                    }
+                                </div>
+                                <a class="carousel-control-prev" href="#photosCarousel_@hotel.Id" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#photosCarousel_@hotel.Id" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                            <!-- Button trigger modal -->
+                            <div class="text-center mt-1">
+                                <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#photosModal_@hotel.Id">Photos</button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="photosModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - Photos</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="photosModalCarousel_@hotel.Id" class="carousel slide" data-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    @foreach (var p in hotel.HotelPhotos)
+                                                    {
+                                                        <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
+                                                            <img class="pcarousel-img d-block w-100" src="@p.Photo" alt="@p.Title" title="@p.Title">
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <a class="carousel-control-prev" href="#photosModalCarousel_@hotel.Id" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#photosModalCarousel_@hotel.Id" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div>
+                            @hotel.Country
+                        </div>
+                        <div>
+                            @hotel.Region
+                        </div>
+                        <div>
+                            @hotel.City
+                        </div>
+                        <div>
+                            <a class="btn btn-outline-primary" href="https://www.google.com/maps/search/@hotel.Location">Show on map!</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model.Hotels != null && Model.Hotels.Count == 0)
+{
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-warning">
+                Apartments not found. Please change your search details.
             </div>
         </div>
-    }
-}
-else if(Model.Hotels != null && Model.Hotels.Count == 0)
-{
-<div class="row">
-    <div class="col">
-        <div class="alert alert-warning">
-            Apartments not found. Please change your search details.
-        </div>
     </div>
-</div>
 }
 
 @section Scripts {

@@ -34,24 +34,33 @@ namespace BookingApplication.Controllers
             if (ModelState.IsValid)
             {
                 var hotels = await _context.Hotel
-                    .Where(w => 
+                    .Where(w =>
                     (w.Name.ToLower().Contains(model.Name.ToLower())
                     || w.City.ToLower().Contains(model.Name.ToLower())
                     || w.Country.ToLower().Contains(model.Name.ToLower()))
-                    && w.Rate >= model.MinRate 
+                    && w.Rate >= model.MinRate
                     && w.Stars >= model.MinStars)
                     .Include(i => i.HotelPhotos)
-                    .Include(i => i.Apartments.Where(w=>w.People>=model.People 
-                    && w.Beds >= model.Beds 
-                    && (!model.Balcony || w.Balcony) 
-                    && (!model.Kitchen || w.Kitchen) 
+                    .Include(i => i.Apartments.Where(w => 
+                    w.People >= model.People
+                    && w.Beds >= model.Beds
+                    && (!model.Balcony || w.Balcony)
+                    && (!model.Kitchen || w.Kitchen)
                     && (!model.Tv || w.Tv)
-                    && (model.MaxNightPrice == 0 || w.NightPrice <= model.MaxNightPrice)))               
-                    .ThenInclude(i=>i.ApartmentPhotos)
-                    .Where(w => w.Apartments.Any())
+                    && (model.MaxNightPrice == 0 || w.NightPrice <= model.MaxNightPrice)))
+                    .ThenInclude(i => i.Reservations.Where(w => w.StartDate < model.EndDate && model.StartDate < w.EndDate))
+                    .Where(w => w.Apartments.Where(w => w.Reservations.Count == 0).Any())
                     .ToListAsync();
 
-                model.Hotels = hotels;             
+                foreach(var hotel in hotels)
+                {
+                    foreach(var apartment in hotel.Apartments)
+                    {
+                        apartment.ApartmentPhotos = await _context.ApartmentPhoto.Where(w => w.ApartmentId == apartment.Id).ToListAsync();
+                    }
+                }
+
+                model.Hotels = hotels;
 
                 return View(model);
             }
