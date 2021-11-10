@@ -6,7 +6,7 @@
 
 <h1 class="text-white">Search</h1>
 
-<h4 class="text-white">Apartment</h4>
+<h3 class="text-white">Apartment</h3>
 <hr />
 <div class="row bg-light p-4 rounded">
     <div class="col-md-12">
@@ -15,24 +15,24 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
+                        <label asp-for="Name" class="control-label font-weight-bold"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="People" class="control-label"></label>
+                        <label asp-for="People" class="control-label font-weight-bold"></label>
                         <input asp-for="People" class="form-control" />
                         <span asp-validation-for="People" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label asp-for="StartDate" class="control-label"></label>
+                        <label asp-for="StartDate" class="control-label font-weight-bold"></label>
                         <input asp-for="StartDate" class="form-control" />
                         <span asp-validation-for="StartDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="EndDate" class="control-label"></label>
+                        <label asp-for="EndDate" class="control-label font-weight-bold"></label>
                         <input asp-for="EndDate" class="form-control" />
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
@@ -41,28 +41,28 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label asp-for="Beds" class="control-label"></label>
+                        <label asp-for="Beds" class="control-label font-weight-bold"></label>
                         <input asp-for="Beds" class="form-control" />
                         <span asp-validation-for="Beds" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label asp-for="MinRate" class="control-label"></label>
+                        <label asp-for="MinRate" class="control-label font-weight-bold"></label>
                         <input asp-for="MinRate" class="form-control" />
                         <span asp-validation-for="MinRate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label asp-for="MinStars" class="control-label"></label>
+                        <label asp-for="MinStars" class="control-label font-weight-bold"></label>
                         <input asp-for="MinStars" class="form-control" />
                         <span asp-validation-for="MinStars" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label asp-for="MaxNightPrice" class="control-label"></label>
+                        <label asp-for="MaxNightPrice" class="control-label font-weight-bold"></label>
                         <input asp-for="MaxNightPrice" min="0" step="0.01" class="form-control" />
                         <span asp-validation-for="MaxNightPrice" class="text-danger"></span>
                     </div>
@@ -71,28 +71,28 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group form-check">
-                        <label class="form-check-label">
+                        <label class="form-check-label  font-weight-bold">
                             <input class="form-check-input" asp-for="Balcony" /> @Html.DisplayNameFor(model => model.Balcony)
                         </label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group form-check">
-                        <label class="form-check-label">
+                        <label class="form-check-label font-weight-bold">
                             <input class="form-check-input" asp-for="PrivateBathroom" /> @Html.DisplayNameFor(model => model.PrivateBathroom)
                         </label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group form-check">
-                        <label class="form-check-label">
+                        <label class="form-check-label font-weight-bold">
                             <input class="form-check-input" asp-for="Kitchen" /> @Html.DisplayNameFor(model => model.Kitchen)
                         </label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group form-check">
-                        <label class="form-check-label">
+                        <label class="form-check-label font-weight-bold">
                             <input class="form-check-input" asp-for="Tv" /> @Html.DisplayNameFor(model => model.Tv)
                         </label>
                     </div>
@@ -100,7 +100,9 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Search
+                </button>
             </div>
         </form>
     </div>
@@ -108,310 +110,305 @@
 
 @if (Model.Hotels != null && Model.Hotels.Any())
 {
-    <table class="table bg-light mt-4 rounded">
-        <thead>
-            <tr class="p-4">
-                <th class="text-center">
-                    Name
-                </th>
-                <th class="text-center">
-                    Description
-                </th>
-                <th class="text-center">
-                    Stars/Rate
-                </th>
-                <th class="text-center">
-                    Hotel photos
-                </th>
-                <th class="text-center">
-                    Location
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var hotel in Model.Hotels)
-            {
-                <tr>
-                    <td>
-                        <div>
-                            <i class="fa-solid fa-hotel"></i> @hotel.Name
-                        </div>
-                        <div class="p-2 bg-success rounded text-center text-white font-weight-bold">
-                            @if (hotel.Apartments.Any())
-                            {
-                                @hotel.Apartments.Min(a => a.NightPrice) @Html.Raw("&euro;")
-                            }
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            @hotel.Description
-                        </div>
-                        <div class="text-center mt-1">
-                            <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentsModal_@hotel.Id">See your options</button>
-                        </div>
-                        <!-- Modal -->
-                        <div class="modal fade" id="apartmentsModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - Apartments</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+    <div class="row bg-light mt-4 p-4 font-weight-bold rounded">
+        <div class="col text-center">
+            Name
+        </div>
+        <div class="col text-center">
+            Description
+        </div>
+        <div class="col text-center">
+            Stars/Rate
+        </div>
+        <div class="col text-center">
+            Hotel photos
+        </div>
+        <div class="col text-center">
+            Location
+        </div>
+    </div>
+
+    @foreach (var hotel in Model.Hotels)
+    {
+        <div class="row p-3 bg-light">
+            <div class="col">
+                <div class="hname">
+                    <i class="fas fa-hotel"></i> @hotel.Name
+                </div>
+                <div class="p-2 bg-success rounded text-center text-white font-weight-bold">
+                    @if (hotel.Apartments.Any())
+                    {
+                        @hotel.Apartments.Min(a => a.NightPrice) @Html.Raw(" &euro;")
+                    }
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    @hotel.Description
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-block btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentsModal_@hotel.Id"><i class="fas fa-hand-pointer"></i> See your options</button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="apartmentsModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - Apartments</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        @* <img class="img-fluid rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaxCLJPWZ6mOL6gLDGFg_AjFqDxaQeGkE70Q&usqp=CAU" />*@
+                                        <svg width="500" height="500">
+                                            <rect id="room_@hotel.Id" x="25" y="25" width="400" height="450" style="fill: antiquewhite; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                            <rect id="balcony_@hotel.Id" x="425" y="200" width="75" height="200" style="fill: gray; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                            <rect id="bed1_@hotel.Id" x="250" y="25" width="100" height="180" style="fill: white; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                            <rect id="bed1-blanket_@hotel.Id" x="250" y="70" width="100" height="120" style="fill: cadetblue; stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
+                                            <rect id="bed1-pillow_@hotel.Id" x="275" y="25" width="50" height="20" style="fill: cadetblue; stroke-width: 2; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                            <rect id="bed2_@hotel.Id" x="100" y="25" width="100" height="180" style="fill: white; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                            <rect id="bed2-blanket_@hotel.Id" x="100" y="70" width="100" height="120" style="fill: cadetblue; stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
+                                            <rect id="bed2-pillow_@hotel.Id" x="125" y="25" width="50" height="20" style="fill: cadetblue; stroke-width: 2; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                            <rect id="table1_@hotel.Id" x="150" y="425" width="200" height="50" style="fill: sandybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
+
+                                            <rect id="tv_@hotel.Id" x="175" y="450" width="150" height="15" style="fill: black; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                            <rect id="kitchen_@hotel.Id" x="25" y="335" width="80" height="140" style="fill: silver; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                            <rect id="owen_@hotel.Id" x="25" y="335" width="80" height="70" style="fill: black; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
+                                            <circle id="owen-p1_@hotel.Id" cx="45" cy="352" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+                                            <circle id="owen-p2_@hotel.Id" cx="45" cy="387" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+                                            <circle id="owen-p3_@hotel.Id" cx="85" cy="352" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+                                            <circle id="owen-p4_@hotel.Id" cx="85" cy="387" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+
+                                            <rect id="table2_@hotel.Id" x="150" y="280" width="150" height="80" style="fill: sandybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                            <rect id="chair_@hotel.Id" x="320" y="300" width="40" height="40" style="fill: rosybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
+                                            <line id="chair-line_@hotel.Id" x1="350" y1="300" x2="350" y2="340" style="stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
+                                        </svg>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col text-center">
-                                                @* <img class="img-fluid rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaxCLJPWZ6mOL6gLDGFg_AjFqDxaQeGkE70Q&usqp=CAU" />*@
-                                                <svg width="500" height="500">
-                                                    <rect id="room_@hotel.Id" x="25" y="25" width="400" height="450" style="fill: antiquewhite; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-
-                                                    <rect id="balcony_@hotel.Id" x="425" y="200" width="75" height="200" style="fill: gray; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-
-                                                    <rect id="bed1_@hotel.Id" x="250" y="25" width="100" height="180" style="fill: white; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-                                                    <rect id="bed1-blanket_@hotel.Id" x="250" y="70" width="100" height="120" style="fill: cadetblue; stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
-                                                    <rect id="bed1-pillow_@hotel.Id" x="275" y="25" width="50" height="20" style="fill: cadetblue; stroke-width: 2; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-
-                                                    <rect id="bed2_@hotel.Id" x="100" y="25" width="100" height="180" style="fill: white; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-                                                    <rect id="bed2-blanket_@hotel.Id" x="100" y="70" width="100" height="120" style="fill: cadetblue; stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
-                                                    <rect id="bed2-pillow_@hotel.Id" x="125" y="25" width="50" height="20" style="fill: cadetblue; stroke-width: 2; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-
-                                                    <rect id="table1_@hotel.Id" x="150" y="425" width="200" height="50" style="fill: sandybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
-
-                                                    <rect id="tv_@hotel.Id" x="175" y="450" width="150" height="15" style="fill: black; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-
-                                                    <rect id="kitchen_@hotel.Id" x="25" y="335" width="80" height="140" style="fill: silver; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-                                                    <rect id="owen_@hotel.Id" x="25" y="335" width="80" height="70" style="fill: black; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
-                                                    <circle id="owen-p1_@hotel.Id" cx="45" cy="352" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
-                                                    <circle id="owen-p2_@hotel.Id" cx="45" cy="387" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
-                                                    <circle id="owen-p3_@hotel.Id" cx="85" cy="352" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
-                                                    <circle id="owen-p4_@hotel.Id" cx="85" cy="387" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
-
-                                                    <rect id="table2_@hotel.Id" x="150" y="280" width="150" height="80" style="fill: sandybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
-                                                    <rect id="chair_@hotel.Id" x="320" y="300" width="40" height="40" style="fill: rosybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
-                                                    <line id="chair-line_@hotel.Id" x1="350" y1="300" x2="350" y2="340" style="stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
-                                                </svg>
+                                </div>
+                                <div class="row mt-1 font-weight-bold">
+                                    <div class="col">
+                                        Select
+                                    </div>
+                                    <div class="col">
+                                        No/Rooms
+                                    </div>
+                                    <div class="col">
+                                        Price
+                                    </div>
+                                    <div class="col">
+                                        People/Beds
+                                    </div>
+                                    <div class="col">
+                                        Amenities
+                                    </div>
+                                    <div class="col">
+                                        Photos
+                                    </div>
+                                </div>
+                                @foreach (var p in hotel.Apartments)
+                                {
+                                    <div class="row mt-1 p-2 rounded bg-light">
+                                        <div class="col">
+                                            @Html.RadioButtonFor(m => m.ApartmentId, p.Id, new { data_tv = Json.Serialize(p.Tv), data_kitchen = Json.Serialize(p.Kitchen), data_balcony = Json.Serialize(p.Balcony), data_bed2 = Json.Serialize(p.Beds > 1), data_hid = hotel.Id })
+                                        </div>
+                                        <div class="col">
+                                            @p.Name/@p.Rooms
+                                        </div>
+                                        <div class="col">
+                                            <div class="p-2 bg-success rounded text-white text-center font-weight-bold">
+                                                @p.NightPrice @Html.Raw("&euro;")
                                             </div>
                                         </div>
-                                        <div class="row mt-1 font-weight-bold">
-                                            <div class="col">
-                                                Select
-                                            </div>
-                                            <div class="col">
-                                                No/Rooms
-                                            </div>
-                                            <div class="col">
-                                                Price
-                                            </div>
-                                            <div class="col">
-                                                People/Beds
-                                            </div>
-                                            <div class="col">
-                                                Amenities
-                                            </div>
-                                            <div class="col">
-                                                Photos
-                                            </div>
+                                        <div class="col">
+                                            @for (int i = 0; i < p.People; i++)
+                                            {
+                                                <text>
+                                                    <i class="fas fa-user" data-toggle="tooltip" data-title="@p.PeopleTooltipText"></i>
+                                                </text>
+                                            }
+                                            /
+                                            @for (int i = 0; i < p.Beds; i++)
+                                            {
+                                                <text>
+                                                    <i class="fas fa-bed" data-toggle="tooltip" data-title="@p.BedsTooltipText"></i>
+                                                </text>
+                                            }
                                         </div>
-                                        @foreach (var p in hotel.Apartments)
-                                        {
-                                            <div class="row mt-1 p-2 rounded bg-light">
-                                                <div class="col">
-                                                    @Html.RadioButtonFor(m => m.ApartmentId, p.Id, new { data_tv = Json.Serialize(p.Tv), data_kitchen = Json.Serialize(p.Kitchen), data_balcony = Json.Serialize(p.Balcony), data_bed2 = Json.Serialize(p.Beds>1), data_hid = hotel.Id })
-                                                </div>
-                                                <div class="col">
-                                                    @p.Name/@p.Rooms
-                                                </div>
-                                                <div class="col">
-                                                    <div class="p-2 bg-success rounded text-white font-weight-bold">
-                                                        @p.NightPrice @Html.Raw("&euro;")
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    @for (int i = 0; i < p.People; i++)
-                                                    {
-                                                        <text>
-                                                            <i class="fa-solid fa-user" data-toggle="tooltip" data-title="@p.PeopleTooltipText"></i>
-                                                        </text>
-                                                    }
-                                                    /
-                                                    @for (int i = 0; i < p.Beds; i++)
-                                                    {
-                                                        <text>
-                                                            <i class="fa-solid fa-bed" data-toggle="tooltip" data-title="@p.BedsTooltipText"></i>
-                                                        </text>
-                                                    }
-                                                </div>
-                                                <div class="col">
-                                                    @if (p.PrivateBathroom)
-                                                    {
-                                                        <i class="fa-solid fa-bath" data-toggle="tooltip" data-title="Private bathroom"></i>
-                                                    }
+                                        <div class="col">
+                                            @if (p.PrivateBathroom)
+                                            {
+                                                <i class="fas fa-bath" data-toggle="tooltip" data-title="Private bathroom"></i>
+                                            }
 
-                                                    @if (p.Tv)
-                                                    {
-                                                        <i class="fa-solid fa-tv" data-toggle="tooltip" data-title="TV set"></i>
-                                                    }
+                                            @if (p.Tv)
+                                            {
+                                                <i class="fas fa-tv" data-toggle="tooltip" data-title="TV set"></i>
+                                            }
 
-                                                    @if (p.Kitchen)
-                                                    {
-                                                        <i class="fa-solid fa-utensils" data-toggle="tooltip" data-title="Kitchen"></i>
-                                                    }
+                                            @if (p.Kitchen)
+                                            {
+                                                <i class="fas fa-utensils" data-toggle="tooltip" data-title="Kitchen"></i>
+                                            }
 
-                                                    @if (p.Balcony)
-                                                    {
-                                                        <i class="fa-solid fa-store" data-toggle="tooltip" data-title="Balcony"></i>
-                                                    }
+                                            @if (p.Balcony)
+                                            {
+                                                <i class="fas fa-store" data-toggle="tooltip" data-title="Balcony"></i>
+                                            }
+                                        </div>
+                                        <div class="col">
+                                            @if (p.ApartmentPhotos.Any())
+                                            {
+                                                <!---Trigger Modal -->
+                                                <div class="text-center mt-1">
+                                                    <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentPhotosModal_@p.Id"><i class="fas fa-images"></i> Photos</button>
                                                 </div>
-                                                <div class="col">
-                                                    @if (p.ApartmentPhotos.Any())
-                                                    {
-                                                        <!---Trigger Modal -->
-                                                        <div class="text-center mt-1">
-                                                            <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentPhotosModal_@p.Id">Photos</button>
-                                                        </div>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="apartmentPhotosModal_@p.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - @p.Name - Photos</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div id="apartmentPhotosModalCarousel_@p.Id" class="carousel slide" data-ride="carousel">
-                                                                            <div class="carousel-inner">
-                                                                                @foreach (var ap in p.ApartmentPhotos)
-                                                                                {
-                                                                                    <div class="carousel-item @(ap == p.ApartmentPhotos.First() ? "active" : string.Empty)">
-                                                                                        <img class="pcarousel-img d-block w-100" src="@ap.Photo" alt="@ap.Title" title="@ap.Title">
-                                                                                    </div>
-                                                                                }
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="apartmentPhotosModal_@p.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - @p.Name - Photos</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div id="apartmentPhotosModalCarousel_@p.Id" class="carousel slide" data-ride="carousel">
+                                                                    <div class="carousel-inner">
+                                                                        @foreach (var ap in p.ApartmentPhotos)
+                                                                        {
+                                                                            <div class="carousel-item @(ap == p.ApartmentPhotos.First() ? "active" : string.Empty)">
+                                                                                <img class="pcarousel-img d-block w-100" src="@ap.Photo" alt="@ap.Title" title="@ap.Title">
                                                                             </div>
-                                                                            <a class="carousel-control-prev" href="#apartmentPhotosModalCarousell_@p.Id" role="button" data-slide="prev">
-                                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                                <span class="sr-only">Previous</span>
-                                                                            </a>
-                                                                            <a class="carousel-control-next" href="#apartmentPhotosModalCarousel_@p.Id" role="button" data-slide="next">
-                                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                                <span class="sr-only">Next</span>
-                                                                            </a>
-                                                                        </div>
+                                                                        }
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    </div>
+                                                                    <a class="carousel-control-prev" href="#apartmentPhotosModalCarousell_@p.Id" role="button" data-slide="prev">
+                                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                        <span class="sr-only">Previous</span>
+                                                                    </a>
+                                                                    <a class="carousel-control-next" href="#apartmentPhotosModalCarousel_@p.Id" role="button" data-slide="next">
+                                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                        <span class="sr-only">Next</span>
+                                                                    </a>
                                                                 </div>
                                                             </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            </div>
                                                         </div>
-                                                    }
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
+                                }
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        <div class="text-warning">
-                            @for (int i = 0; i < hotel.Stars; i++)
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-warning">
+                    @for (int i = 0; i < hotel.Stars; i++)
+                    {
+                        @Html.Raw("&#9733;")
+                    }
+                </div>
+                <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
+                    @hotel.Rate
+                </div>
+            </div>
+            <div class="col">
+                @if (hotel.HotelPhotos.Any())
+                {
+                    <div id="photosCarousel_@hotel.Id" class="carousel slide tcarousel" data-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach (var p in hotel.HotelPhotos)
                             {
-                                @Html.Raw("&#9733;")
+                                <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
+                                    <img class="rounded tcarousel-img d-block" src="@p.Photo" alt="@p.Title" title="@p.Title">
+                                </div>
                             }
                         </div>
-                        <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
-                            @hotel.Rate
-                        </div>
-                    </td>
-                    <td>
-                        @if (hotel.HotelPhotos.Any())
-                        {
-                            <div id="photosCarousel_@hotel.Id" class="carousel slide tcarousel" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    @foreach (var p in hotel.HotelPhotos)
-                                    {
-                                        <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
-                                            <img class="rounded tcarousel-img d-block" src="@p.Photo" alt="@p.Title" title="@p.Title">
-                                        </div>
-                                    }
+                        <a class="carousel-control-prev" href="#photosCarousel_@hotel.Id" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#photosCarousel_@hotel.Id" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-sm btn-block btn-outline-info" data-toggle="modal" data-target="#photosModal_@hotel.Id"><i class="fas fa-images"></i>  Photos</button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="photosModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - Photos</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <a class="carousel-control-prev" href="#photosCarousel_@hotel.Id" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#photosCarousel_@hotel.Id" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                            <!-- Button trigger modal -->
-                            <div class="text-center mt-1">
-                                <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#photosModal_@hotel.Id">Photos</button>
-                            </div>
-                            <!-- Modal -->
-                            <div class="modal fade" id="photosModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - Photos</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div id="photosModalCarousel_@hotel.Id" class="carousel slide" data-ride="carousel">
-                                                <div class="carousel-inner">
-                                                    @foreach (var p in hotel.HotelPhotos)
-                                                    {
-                                                        <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
-                                                            <img class="pcarousel-img d-block w-100" src="@p.Photo" alt="@p.Title" title="@p.Title">
-                                                        </div>
-                                                    }
+                                <div class="modal-body">
+                                    <div id="photosModalCarousel_@hotel.Id" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            @foreach (var p in hotel.HotelPhotos)
+                                            {
+                                                <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
+                                                    <img class="pcarousel-img d-block w-100" src="@p.Photo" alt="@p.Title" title="@p.Title">
                                                 </div>
-                                                <a class="carousel-control-prev" href="#photosModalCarousel_@hotel.Id" role="button" data-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control-next" href="#photosModalCarousel_@hotel.Id" role="button" data-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </div>
+                                            }
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
+                                        <a class="carousel-control-prev" href="#photosModalCarousel_@hotel.Id" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#photosModalCarousel_@hotel.Id" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
                                     </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
-                        }
-                    </td>
-                    <td class="text-center">
-                        <div>
-                            @hotel.Country
                         </div>
-                        <div>
-                            @hotel.Region
-                        </div>
-                        <div>
-                            @hotel.City
-                        </div>
-                        <div>
-                            <a class="btn btn-outline-primary" href="https://www.google.com/maps/search/@hotel.Location" target="_blank">Show on map!</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </div>
+                }
+            </div>
+            <div class="col text-center">
+                <div>
+                    @hotel.Country
+                </div>
+                <div>
+                    @hotel.Region
+                </div>
+                <div>
+                    @hotel.City
+                </div>
+                <div>
+                    <a class="btn btn-sm btn-block btn-outline-primary" href="https://www.google.com/maps/search/@hotel.Location" target="_blank"><i class="fas fa-map-marker-alt"></i> Show on map!</a>
+                </div>
+            </div>
+        </div>
+    }
+
 }
 else if (Model.Hotels != null && Model.Hotels.Count == 0)
 {
