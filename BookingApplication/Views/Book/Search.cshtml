@@ -118,10 +118,7 @@
                     Description
                 </th>
                 <th>
-                    Rate
-                </th>
-                <th>
-                    Stars
+                    Stars/Rate
                 </th>
                 <th>
                     Hotel photos
@@ -138,13 +135,12 @@
                 <tr>
                     <td>
                         <div>
-                            @hotel.Name
+                            <i class="fa-solid fa-hotel"></i> @hotel.Name
                         </div>
                         <div class="p-2 bg-success rounded text-center text-white font-weight-bold">
                             @if (hotel.Apartments.Any())
                             {
-                                @hotel.Apartments.Min(a => a.NightPrice)
-                                <text> EUR</text>
+                                @hotel.Apartments.Min(a => a.NightPrice) @Html.Raw("&euro;")
                             }
                         </div>
                     </td>
@@ -176,40 +172,34 @@
                                                 Select
                                             </div>
                                             <div class="col">
-                                                Room no
+                                                No/Rooms
                                             </div>
                                             <div class="col">
                                                 Price
                                             </div>
                                             <div class="col">
-                                                Rooms
-                                            </div>
-                                            <div class="col">
-                                                People
-                                            </div>
-                                            <div class="col">
-                                                Beds
+                                                People/Beds
                                             </div>
                                             <div class="col">
                                                 Amenities
+                                            </div>
+                                            <div class="col">
+                                                Photos
                                             </div>
                                         </div>
                                         @foreach (var p in hotel.Apartments)
                                         {
                                             <div class="row mt-1 p-2 rounded bg-light">
                                                 <div class="col">
-                                                    @Html.RadioButtonFor(m=>m.ApartmentId,p.Id)
+                                                    @Html.RadioButtonFor(m => m.ApartmentId, p.Id)
                                                 </div>
                                                 <div class="col">
-                                                    @p.Name
+                                                    @p.Name/@p.Rooms
                                                 </div>
                                                 <div class="col">
                                                     <div class="p-2 bg-success rounded text-white font-weight-bold">
                                                         @p.NightPrice @Html.Raw("&euro;")
                                                     </div>
-                                                </div>
-                                                <div class="col">
-                                                    @p.Rooms
                                                 </div>
                                                 <div class="col">
                                                     @for (int i = 0; i < p.People; i++)
@@ -218,8 +208,7 @@
                                                             <i class="fa-solid fa-user" data-toggle="tooltip" data-title="@p.PeopleTooltipText"></i>
                                                         </text>
                                                     }
-                                                </div>
-                                                <div class="col">
+                                                    /
                                                     @for (int i = 0; i < p.Beds; i++)
                                                     {
                                                         <text>
@@ -248,6 +237,51 @@
                                                         <i class="fa-solid fa-store" data-toggle="tooltip" data-title="Balcony"></i>
                                                     }
                                                 </div>
+                                                <div class="col">
+                                                    @if (p.ApartmentPhotos.Any())
+                                                    {
+                                                        <!---Trigger Modal -->
+                                                        <div class="text-center mt-1">
+                                                            <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentPhotosModal_@p.Id">Photos</button>
+                                                        </div>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="apartmentPhotosModal_@p.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - @p.Name - Photos</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div id="apartmentPhotosModalCarousel_@p.Id" class="carousel slide" data-ride="carousel">
+                                                                            <div class="carousel-inner">
+                                                                                @foreach (var ap in p.ApartmentPhotos)
+                                                                                {
+                                                                                    <div class="carousel-item @(ap == p.ApartmentPhotos.First() ? "active" : string.Empty)">
+                                                                                        <img class="pcarousel-img d-block w-100" src="@ap.Photo" alt="@ap.Title" title="@ap.Title">
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                            <a class="carousel-control-prev" href="#apartmentPhotosModalCarousell_@p.Id" role="button" data-slide="prev">
+                                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                <span class="sr-only">Previous</span>
+                                                                            </a>
+                                                                            <a class="carousel-control-next" href="#apartmentPhotosModalCarousel_@p.Id" role="button" data-slide="next">
+                                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                <span class="sr-only">Next</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -259,12 +293,15 @@
                         </div>
                     </td>
                     <td>
+                        <div class="text-warning">
+                            @for (int i = 0; i < hotel.Stars; i++)
+                            {
+                                @Html.Raw("&#9733;")
+                            }
+                        </div>
                         <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
                             @hotel.Rate
                         </div>
-                    </td>
-                    <td>
-                        @hotel.Stars
                     </td>
                     <td>
                         @if (hotel.HotelPhotos.Any())
