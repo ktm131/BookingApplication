@@ -164,7 +164,35 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col text-center">
-                                                <img class="img-fluid rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaxCLJPWZ6mOL6gLDGFg_AjFqDxaQeGkE70Q&usqp=CAU" />
+                                                @* <img class="img-fluid rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaxCLJPWZ6mOL6gLDGFg_AjFqDxaQeGkE70Q&usqp=CAU" />*@
+                                                <svg width="500" height="500">
+                                                    <rect id="room_@hotel.Id" x="25" y="25" width="400" height="450" style="fill: antiquewhite; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                                    <rect id="balcony_@hotel.Id" x="425" y="200" width="75" height="200" style="fill: gray; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                                    <rect id="bed1_@hotel.Id" x="250" y="25" width="100" height="180" style="fill: white; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                                    <rect id="bed1-blanket_@hotel.Id" x="250" y="70" width="100" height="120" style="fill: cadetblue; stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
+                                                    <rect id="bed1-pillow_@hotel.Id" x="275" y="25" width="50" height="20" style="fill: cadetblue; stroke-width: 2; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                                    <rect id="bed2_@hotel.Id" x="100" y="25" width="100" height="180" style="fill: white; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                                    <rect id="bed2-blanket_@hotel.Id" x="100" y="70" width="100" height="120" style="fill: cadetblue; stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
+                                                    <rect id="bed2-pillow_@hotel.Id" x="125" y="25" width="50" height="20" style="fill: cadetblue; stroke-width: 2; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                                    <rect id="table1_@hotel.Id" x="150" y="425" width="200" height="50" style="fill: sandybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
+
+                                                    <rect id="tv_@hotel.Id" x="175" y="450" width="150" height="15" style="fill: black; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+
+                                                    <rect id="kitchen_@hotel.Id" x="25" y="335" width="80" height="140" style="fill: silver; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                                    <rect id="owen_@hotel.Id" x="25" y="335" width="80" height="70" style="fill: black; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
+                                                    <circle id="owen-p1_@hotel.Id" cx="45" cy="352" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+                                                    <circle id="owen-p2_@hotel.Id" cx="45" cy="387" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+                                                    <circle id="owen-p3_@hotel.Id" cx="85" cy="352" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+                                                    <circle id="owen-p4_@hotel.Id" cx="85" cy="387" r="15" stroke="silver" fill="silver; transition: opacity 0.5s linear;" />
+
+                                                    <rect id="table2_@hotel.Id" x="150" y="280" width="150" height="80" style="fill: sandybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear;" />
+                                                    <rect id="chair_@hotel.Id" x="320" y="300" width="40" height="40" style="fill: rosybrown; stroke-width: 3; stroke: rgb(0,0,0); transition: opacity 0.5s linear; " />
+                                                    <line id="chair-line_@hotel.Id" x1="350" y1="300" x2="350" y2="340" style="stroke: rgb(0,0,0); stroke-width: 2; transition: opacity 0.5s linear;" />
+                                                </svg>
                                             </div>
                                         </div>
                                         <div class="row mt-1 font-weight-bold">
@@ -191,7 +219,7 @@
                                         {
                                             <div class="row mt-1 p-2 rounded bg-light">
                                                 <div class="col">
-                                                    @Html.RadioButtonFor(m => m.ApartmentId, p.Id)
+                                                    @Html.RadioButtonFor(m => m.ApartmentId, p.Id, new { data_tv = Json.Serialize(p.Tv), data_kitchen = Json.Serialize(p.Kitchen), data_balcony = Json.Serialize(p.Balcony), data_bed2 = Json.Serialize(p.Beds>1), data_hid = hotel.Id })
                                                 </div>
                                                 <div class="col">
                                                     @p.Name/@p.Rooms
@@ -399,3 +427,57 @@ else if (Model.Hotels != null && Model.Hotels.Count == 0)
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    let inps = document.getElementsByName("ApartmentId");
+
+    for (let i in inps) {
+        inps[i].onclick = function (e) {
+            console.log(this.dataset);
+
+            if (!JSON.parse(this.dataset.balcony)) {
+                //document.getElementById("balcony_" + this.dataset.hid).style.transition = "opacity 0.5s linear";
+                document.getElementById("balcony_" + this.dataset.hid).style.opacity = 0.1;
+            }
+            else {
+                document.getElementById("balcony_" + this.dataset.hid).style.opacity = 1;
+            }
+
+            if (!JSON.parse(this.dataset.tv)) {
+
+                document.getElementById("tv_" + this.dataset.hid).style.opacity = 0.1;
+            }
+            else {
+                document.getElementById("tv_" + this.dataset.hid).style.opacity = 1;
+            }
+
+            if (!JSON.parse(this.dataset.kitchen)) {
+                document.getElementById("kitchen_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("owen_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("owen-p1_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("owen-p2_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("owen-p3_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("owen-p4_" + this.dataset.hid).style.opacity = 0.1;
+            }
+            else {
+                document.getElementById("kitchen_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("owen_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("owen-p1_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("owen-p2_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("owen-p3_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("owen-p4_" + this.dataset.hid).style.opacity = 1;
+            }
+
+            if (!JSON.parse(this.dataset.bed2)) {
+                document.getElementById("bed2_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("bed2-blanket_" + this.dataset.hid).style.opacity = 0.1;
+                document.getElementById("bed2-pillow_" + this.dataset.hid).style.opacity = 0.1;
+            }
+            else {
+                document.getElementById("bed2_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("bed2-blanket_" + this.dataset.hid).style.opacity = 1;
+                document.getElementById("bed2-pillow_" + this.dataset.hid).style.opacity = 1;
+            }
+        }
+    }
+</script>
