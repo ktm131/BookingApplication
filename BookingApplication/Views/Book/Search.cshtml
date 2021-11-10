@@ -334,12 +334,12 @@
                     <td>
                         @if (hotel.HotelPhotos.Any())
                         {
-                            <div id="photosCarousel_@hotel.Id" class="carousel slide" data-ride="carousel">
+                            <div id="photosCarousel_@hotel.Id" class="carousel slide tcarousel" data-ride="carousel">
                                 <div class="carousel-inner">
                                     @foreach (var p in hotel.HotelPhotos)
                                     {
                                         <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
-                                            <img class="tcarousel-img d-block" src="@p.Photo" alt="@p.Title" title="@p.Title">
+                                            <img class="rounded tcarousel-img d-block" src="@p.Photo" alt="@p.Title" title="@p.Title">
                                         </div>
                                     }
                                 </div>
