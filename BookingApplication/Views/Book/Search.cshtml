@@ -4,11 +4,11 @@
     ViewData["Title"] = "Search";
 }
 
-<h1>Search</h1>
+<h1 class="text-white">Search</h1>
 
-<h4>Apartment</h4>
+<h4 class="text-white">Apartment</h4>
 <hr />
-<div class="row">
+<div class="row bg-light p-4 rounded">
     <div class="col-md-12">
         <form asp-action="Search">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -108,22 +108,22 @@
 
 @if (Model.Hotels != null && Model.Hotels.Any())
 {
-    <table class="table">
+    <table class="table bg-light mt-4 rounded">
         <thead>
-            <tr>
-                <th>
+            <tr class="p-4">
+                <th class="text-center">
                     Name
                 </th>
-                <th>
+                <th class="text-center">
                     Description
                 </th>
-                <th>
+                <th class="text-center">
                     Stars/Rate
                 </th>
-                <th>
+                <th class="text-center">
                     Hotel photos
                 </th>
-                <th>
+                <th class="text-center">
                     Location
                 </th>
                 <th></th>
@@ -339,7 +339,7 @@
                                     @foreach (var p in hotel.HotelPhotos)
                                     {
                                         <div class="carousel-item @(p == hotel.HotelPhotos.First() ? "active" : string.Empty)">
-                                            <img class="tcarousel-img d-block w-100" src="@p.Photo" alt="@p.Title" title="@p.Title">
+                                            <img class="tcarousel-img d-block" src="@p.Photo" alt="@p.Title" title="@p.Title">
                                         </div>
                                     }
                                 </div>
