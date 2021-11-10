@@ -14,6 +14,7 @@ namespace BookingApplication.Models
         public int People { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int ApartmentId { get; set; }
 
         //additional filters
         public int Beds { get; set; }

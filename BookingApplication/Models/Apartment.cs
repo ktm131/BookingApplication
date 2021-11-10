@@ -29,5 +29,30 @@ namespace BookingApplication.Models
         public Hotel Hotel { get; set; }
         public List<ApartmentPhoto> ApartmentPhotos { get; set; }
         public List<Reservation> Reservations { get; set; }
+
+        [NotMapped]
+        public string PeopleTooltipText
+        {
+            get
+            {
+                if (this.People == 1)
+                {
+                    return $"For {this.People} person";
+                }
+                else
+                {
+                    return $"For {this.People} people";
+                }
+            }
+        }
+
+        [NotMapped]
+        public string BedsTooltipText
+        {
+            get
+            {
+                return $"Number of beds: {this.Beds}";
+            }
+        }
     }
 }

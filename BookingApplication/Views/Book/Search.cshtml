@@ -63,7 +63,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label asp-for="MaxNightPrice" class="control-label"></label>
-                        <input asp-for="MaxNightPrice" class="form-control" />
+                        <input asp-for="MaxNightPrice" min="0" step="0.01" class="form-control" />
                         <span asp-validation-for="MaxNightPrice" class="text-danger"></span>
                     </div>
                 </div>
@@ -137,10 +137,126 @@
             {
                 <tr>
                     <td>
-                        @hotel.Name
+                        <div>
+                            @hotel.Name
+                        </div>
+                        <div class="p-2 bg-success rounded text-center text-white font-weight-bold">
+                            @if (hotel.Apartments.Any())
+                            {
+                                @hotel.Apartments.Min(a => a.NightPrice)
+                                <text> EUR</text>
+                            }
+                        </div>
                     </td>
                     <td>
-                        @hotel.Description
+                        <div>
+                            @hotel.Description
+                        </div>
+                        <div class="text-center mt-1">
+                            <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentsModal_@hotel.Id">See your options</button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="apartmentsModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">@hotel.Name - Apartments</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col text-center">
+                                                <img class="img-fluid rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaxCLJPWZ6mOL6gLDGFg_AjFqDxaQeGkE70Q&usqp=CAU" />
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1 font-weight-bold">
+                                            <div class="col">
+                                                Select
+                                            </div>
+                                            <div class="col">
+                                                Room no
+                                            </div>
+                                            <div class="col">
+                                                Price
+                                            </div>
+                                            <div class="col">
+                                                Rooms
+                                            </div>
+                                            <div class="col">
+                                                People
+                                            </div>
+                                            <div class="col">
+                                                Beds
+                                            </div>
+                                            <div class="col">
+                                                Amenities
+                                            </div>
+                                        </div>
+                                        @foreach (var p in hotel.Apartments)
+                                        {
+                                            <div class="row mt-1 p-2 rounded bg-light">
+                                                <div class="col">
+                                                    @Html.RadioButtonFor(m=>m.ApartmentId,p.Id)
+                                                </div>
+                                                <div class="col">
+                                                    @p.Name
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-2 bg-success rounded text-white font-weight-bold">
+                                                        @p.NightPrice @Html.Raw("&euro;")
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    @p.Rooms
+                                                </div>
+                                                <div class="col">
+                                                    @for (int i = 0; i < p.People; i++)
+                                                    {
+                                                        <text>
+                                                            <i class="fa-solid fa-user" data-toggle="tooltip" data-title="@p.PeopleTooltipText"></i>
+                                                        </text>
+                                                    }
+                                                </div>
+                                                <div class="col">
+                                                    @for (int i = 0; i < p.Beds; i++)
+                                                    {
+                                                        <text>
+                                                            <i class="fa-solid fa-bed" data-toggle="tooltip" data-title="@p.BedsTooltipText"></i>
+                                                        </text>
+                                                    }
+                                                </div>
+                                                <div class="col">
+                                                    @if (p.PrivateBathroom)
+                                                    {
+                                                        <i class="fa-solid fa-bath" data-toggle="tooltip" data-title="Private bathroom"></i>
+                                                    }
+
+                                                    @if (p.Tv)
+                                                    {
+                                                        <i class="fa-solid fa-tv" data-toggle="tooltip" data-title="TV set"></i>
+                                                    }
+
+                                                    @if (p.Kitchen)
+                                                    {
+                                                        <i class="fa-solid fa-utensils" data-toggle="tooltip" data-title="Kitchen"></i>
+                                                    }
+
+                                                    @if (p.Balcony)
+                                                    {
+                                                        <i class="fa-solid fa-store" data-toggle="tooltip" data-title="Balcony"></i>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
@@ -224,7 +340,7 @@
                             @hotel.City
                         </div>
                         <div>
-                            <a class="btn btn-outline-primary" href="https://www.google.com/maps/search/@hotel.Location">Show on map!</a>
+                            <a class="btn btn-outline-primary" href="https://www.google.com/maps/search/@hotel.Location" target="_blank">Show on map!</a>
                         </div>
                     </td>
                 </tr>

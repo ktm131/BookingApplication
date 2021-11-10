@@ -47,7 +47,8 @@ namespace BookingApplication.Controllers
                     && (!model.Balcony || w.Balcony)
                     && (!model.Kitchen || w.Kitchen)
                     && (!model.Tv || w.Tv)
-                    && (model.MaxNightPrice == 0 || w.NightPrice <= model.MaxNightPrice)))
+                    && (model.MaxNightPrice == 0 || w.NightPrice <= model.MaxNightPrice))
+                    .OrderBy(o=>o.NightPrice))
                     .ThenInclude(i => i.Reservations.Where(w => w.StartDate < model.EndDate && model.StartDate < w.EndDate))
                     .Where(w => w.Apartments.Where(w => w.Reservations.Count == 0).Any())
                     .ToListAsync();
