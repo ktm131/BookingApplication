@@ -1,5 +1,6 @@
 ﻿using BookingApplication.Data;
 using BookingApplication.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,10 +13,12 @@ namespace BookingApplication.Controllers
     public class BookController : Controller
     {
         private readonly BookingContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public BookController(BookingContext context)
+        public BookController(BookingContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -49,18 +52,22 @@ namespace BookingApplication.Controllers
                     && (!model.Tv || w.Tv)
                     && (model.MaxNightPrice == 0 || w.NightPrice <= model.MaxNightPrice))
                     .OrderBy(o=>o.NightPrice))
-                    .ThenInclude(i => i.Reservations.Where(w => w.StartDate < model.EndDate && model.StartDate < w.EndDate))
-                    .Where(w => w.Apartments.Where(w => w.Reservations.Count == 0).Any())
+                    //.ThenInclude(i => i.Reservations.Where(w => w.StartDate < model.EndDate && model.StartDate < w.EndDate))
+                    //.Where(w => w.Apartments.Where(w => w.Reservations.Count == 0).Any())
                     .ToListAsync();
 
                 foreach(var hotel in hotels)
                 {
-                    foreach(var apartment in hotel.Apartments)
+                    
+                    foreach (var apartment in hotel.Apartments)
                     {
                         apartment.ApartmentPhotos = await _context.ApartmentPhoto.Where(w => w.ApartmentId == apartment.Id).ToListAsync();
+                        apartment.Reservations = await _context.Reservation.Where(w => w.ApartmentId == apartment.Id && w.StartDate < model.EndDate && model.StartDate < w.EndDate).ToListAsync();
                     }
+                    hotel.Apartments = hotel.Apartments.Where(w => !w.Reservations.Any()).ToList();
                 }
 
+                hotels = hotels.Where(a => a.Apartments.Count > 0).ToList();
                 model.Hotels = hotels;
 
                 return View(model);
@@ -69,6 +76,14 @@ namespace BookingApplication.Controllers
             {
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Reserve(Reservation reservation)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            reservation.UserId = user.Id;
+            return View("Reserve", reservation);
         }
 
     }

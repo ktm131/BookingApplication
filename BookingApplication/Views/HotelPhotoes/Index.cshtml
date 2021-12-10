@@ -4,12 +4,12 @@
     ViewData["Title"] = "Photos";
 }
 
-<h1>@Model.FirstOrDefault()?.Hotel.Name</h1>
+<h1 class="text-white">@Model.FirstOrDefault()?.Hotel.Name</h1>
 
 <p>
     <a asp-action="Create" asp-route-id="@ViewData["hid"]">Create New</a>
 </p>
-<table class="table">
+<table class="table bg-light rounded">
     <thead>
         <tr>
             <th>
