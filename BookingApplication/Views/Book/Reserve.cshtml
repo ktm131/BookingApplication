@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Reserve">
+        <form asp-action="SaveReservation" asp-controller="Book" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="ApartmentId" type="hidden" />
             <input asp-for="UserId" type="hidden" />

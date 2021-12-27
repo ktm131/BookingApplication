@@ -1,5 +1,6 @@
 ﻿using BookingApplication.Data;
 using BookingApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -79,11 +80,32 @@ namespace BookingApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Reserve(Reservation reservation)
         {
             var user = await _userManager.GetUserAsync(User);
             reservation.UserId = user.Id;
             return View("Reserve", reservation);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> SaveReservation(Reservation model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Reservation.Add(model);
+                await _context.SaveChangesAsync();
+
+                model.Apartment = await _context.Apartment.FindAsync(model.ApartmentId);
+                model.Apartment.Hotel = await _context.Hotel.FindAsync(model.Apartment.HotelId);
+
+                return View("Confirm", model);
+            }
+            else
+            {
+                return View("Reserve", model);
+            }
         }
 
     }

@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="People" class="control-label font-weight-bold"></label>
-                        <input asp-for="People" class="form-control" />
+                        <input asp-for="People" class="form-control" min="1" max="20"/>
                         <span asp-validation-for="People" class="text-danger"></span>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label asp-for="MaxNightPrice" class="control-label font-weight-bold"></label>
-                        <input asp-for="MaxNightPrice" min="0" step="1" class="form-control" />
+                        <input asp-for="MaxNightPrice" min="0" step="1" type="number" class="form-control" />
                         <span asp-validation-for="MaxNightPrice" class="text-danger"></span>
                     </div>
                 </div>
@@ -147,7 +147,14 @@
                     @hotel.Description
                 </div>
                 <div class="text-center mt-3">
-                    <button class="btn btn-block btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentsModal_@hotel.Id"><i class="fas fa-hand-pointer"></i> See your options</button>
+                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Administrator"))
+                    {
+                        <button class="btn btn-block btn-sm btn-outline-info" data-toggle="modal" data-target="#apartmentsModal_@hotel.Id"><i class="fas fa-hand-pointer"></i> See your options</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-block btn-sm btn-outline-info disabled"><i class="fas fa-hand-pointer"></i> Login to book</button>
+                    }
                 </div>
                 <!-- Modal -->
                 <div class="modal fade" id="apartmentsModal_@hotel.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

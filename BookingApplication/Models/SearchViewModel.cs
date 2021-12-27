@@ -10,8 +10,9 @@ namespace BookingApplication.Models
     {
         //main
         [Required]
-        public string Name { get; set; }       
-        public int People { get; set; }
+        public string Name { get; set; }
+        [Range(1, 20)]
+        public int People { get; set; } = 1;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int ApartmentId { get; set; }
