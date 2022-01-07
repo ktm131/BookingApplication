@@ -31,8 +31,10 @@
                 <img class="img-fluid" src="@item.Photo" title="@item.Title" alt="@item.Title" />
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <div class="btn-group" role="group">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                </div>
             </td>
         </tr>
 }
