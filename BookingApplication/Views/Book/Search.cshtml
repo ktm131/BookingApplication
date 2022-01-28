@@ -10,7 +10,7 @@
 <hr />
 <div class="row bg-light p-4 rounded">
     <div class="col-md-12">
-        <form asp-action="Search">
+        <form asp-action="Search" class="text-secondary">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col-md-4">
@@ -110,15 +110,12 @@
 
 @if (Model.Hotels != null && Model.Hotels.Any())
 {
-    <div class="row bg-light mt-4 p-4 font-weight-bold rounded">
+    <div class="row bg-light mt-4 p-4 font-weight-bold rounded text-secondary">
         <div class="col text-center">
             Name
         </div>
         <div class="col text-center">
-            Description
-        </div>
-        <div class="col text-center">
-            Stars/Rate
+            Description/Stars/Rate
         </div>
         <div class="col text-center">
             Hotel photos
@@ -130,7 +127,7 @@
 
     @foreach (var hotel in Model.Hotels)
     {
-        <div class="row p-3 bg-light">
+        <div class="row p-3 bg-light text-secondary font-weight-bold">
             <div class="col">
                 <div class="hname">
                     <i class="fas fa-hotel"></i> @hotel.Name
@@ -145,6 +142,15 @@
             <div class="col">
                 <div>
                     @hotel.Description
+                </div>
+                <div class="text-warning">
+                    @for (int i = 0; i < hotel.Stars; i++)
+                    {
+                        @Html.Raw("&#9733;")
+                    }
+                </div>
+                <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
+                    @hotel.Rate
                 </div>
                 <div class="text-center mt-3">
                     @if (User.Identity.IsAuthenticated && !User.IsInRole("Administrator"))
@@ -330,17 +336,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-warning">
-                    @for (int i = 0; i < hotel.Stars; i++)
-                    {
-                        @Html.Raw("&#9733;")
-                    }
-                </div>
-                <div class="bg-primary p-2 text-center font-weight-bold text-white rounded">
-                    @hotel.Rate
                 </div>
             </div>
             <div class="col">

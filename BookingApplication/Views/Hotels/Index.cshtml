@@ -88,7 +88,7 @@
                             </a>
                         </div>
                     }
-                    <a asp-area="" asp-controller="HotelPhotoes" asp-action="Index" asp-route-id="@item.Id">Edit photos</a>
+                    <a asp-area="" asp-controller="HotelPhotoes" asp-action="Index" asp-route-id="@item.Id" class="text-secondary">Edit photos</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Country)
@@ -104,7 +104,7 @@
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Edit</a>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                        <a asp-area="" asp-controller="Apartments" asp-action="Index" asp-route-id="@item.Id" class="btn btn-sm btn-light">Apartments</a>
+                        <a asp-area="" asp-controller="Apartments" asp-action="Index" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Apartments</a>
                     </div>
                 </td>
             </tr>

@@ -95,3 +95,11 @@ body {
 .text-white > a {
     color: white !important;
 }
+
+.bg-gray {
+    background-color: #E8E8E8;
+}
+
+.text-dark-gray {
+    color: #383838 !important;
+}

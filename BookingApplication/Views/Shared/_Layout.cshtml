@@ -11,51 +11,53 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-gray font-weight-bold border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BookingApplication</a>
+                <a class="navbar-brand text-dark-gray" asp-area="" asp-controller="Home" asp-action="Index">BookingApplication</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item text-dark-gray">
+                            <a class="nav-link text-dark-gray" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Hotels" asp-action="Index">Hotels</a>
+                                <a class="nav-link text-dark-gray" asp-area="" asp-controller="Hotels" asp-action="Index">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                                <a class="nav-link text-dark-gray" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Search">Search</a>
+                                <a class="nav-link text-dark-gray" asp-area="" asp-controller="Book" asp-action="Search">Search</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="UserReservations" asp-action="Index">Reservations</a>
+                                <a class="nav-link text-dark-gray" asp-area="" asp-controller="UserReservations" asp-action="Index">Reservations</a>
                             </li>
                         }
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <div class="text-dark-gray">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3 text-white">
+        <main role="main" class="pb-3 text-white font-weight-bold">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-white">
+    <footer class="border-top footer text-muted bg-gray">
         <div class="container">
-            &copy; 2021 - BookingApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - BookingApplication 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

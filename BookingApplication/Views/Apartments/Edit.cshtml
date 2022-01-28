@@ -71,7 +71,7 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i> Back to List</a>
+    <a asp-action="Index" asp-route-id="@Model.HotelId" class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i> Back to List</a>
 </div>
 
 @section Scripts {
